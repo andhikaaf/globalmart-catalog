@@ -1,0 +1,24 @@
+version: 0.0
+os: linux
+files:
+  - source: /build
+    destination: /usr/share/nginx/html
+  - source: /deploy/spa.conf
+    destination: /etc/nginx/default.d
+hooks:
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 60
+      runas: root
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 60
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 60
+      runas: root
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 60
+      runas: root
